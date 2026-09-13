@@ -1,0 +1,214 @@
+<html>
+<head>
+    <title>Панель администратора</title>
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.css">
+</head>
+<body>
+    <!-- Модальное окно создания продукта -->
+    {{template "createProduct" .}}
+    
+    <!-- Модальное окно изменения продукта -->
+    {{template "editProduct" .}}
+
+    <!-- Модальное окно удаления продукта -->
+    {{template "deleteProduct" .}}
+
+    <!-- Модальное окно фильтрации продуктов -->
+    {{template "filterProduct" .}}
+
+    <!-- Модальное окно добавление поставщика -->
+    {{template "createSupplier" .}}
+
+    <!-- Модальное окно изменения поставщика -->
+    {{template "editSupplier" .}}
+
+    <!-- Модальное окно удаления поставщика -->
+    {{template "deleteSupplier" .}}
+
+    <!-- Модальное окно вывода ошибки -->
+    {{template "errorWindow" .}}
+
+    <!-- Шапка -->
+    {{template "header" .}}
+
+    <div class="d-flex flex-wrap justify-content-center pt-3">
+        <h1 class="display-5 justify-content-center">Панель администратора</h1>
+    </div>
+
+    <nav class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-link active" id="nav-product-tab" data-bs-toggle="tab" href="#nav-product" role="tab" aria-controls="nav-product" aria-selected="true">Продукты</a>
+        <a class="nav-link" id="nav-supplier-tab" data-bs-toggle="tab" href="#nav-supplier" role="tab" aria-controls="nav-supplier" aria-selected="false">Поставщики</a>
+        <a class="nav-link" id="nav-storage-tab" data-bs-toggle="tab" href="#nav-storage" role="tab" aria-controls="nav-storage" aria-selected="false">Хранилища</a>
+        <a class="nav-link" id="nav-event-tab" data-bs-toggle="tab" href="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Скидки</a>
+        <a class="nav-link" id="nav-category-tab" data-bs-toggle="tab" href="#nav-category" role="tab" aria-controls="nav-category" aria-selected="false">Категории</a>
+    </nav>
+
+    <div class="p-2 pt-4">
+        <form action="/search" method="post" class="input-group p-10">
+            <input placeholder="Найти" class="form-control form-control-lg" type="text" name="str">
+            <button type="submit" class="btn btn-primary btn-lg input-grop-btn">Поиск</button>
+        </form>
+    </div>
+    
+    <div class="tab-content" id="nav-tabContent">
+        <!-- Таблица продуктов -->
+        <div class="tab-pane fade show active p-2" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab">
+            <table class="table table-striped caption-top">
+                <caption class="display-6 mx-1">Список продуктов</caption>
+                <thead>
+                    <tr>
+                        <td scope="col">Идентификатор
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Product.Id&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Product.Id&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Номер
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Number&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Number&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Наименование
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Product.Name&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Product.Name&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Цена
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Price&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Price&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Количество
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Amount&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Amount&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Поставщик
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Supplier.Name&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Supplier.Name&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Хранилище
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Storage.Address&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Storage.Address&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Скидка
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Event.Name&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=Event.Name&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Категории
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=string_agg&trait=">
+                                <img src="/icons/arrow-up-square.svg" width="12">
+                            </a>
+                            <a class="text-decoration-none" href="/sort?table=Product&argument=string_agg&trait=desc">
+                                <img src="/icons/arrow-down-square.svg" width="12">
+                            </a>
+                        </td>
+                        <td scope="col">Функции</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range $key, $product := .Products }}
+                    <tr>
+                        <td scope="col">{{ $product.Id }}</td>
+                        <td scope="col">{{ $product.Number }}</td>
+                        <td scope="col">{{ $product.Name }}</td>
+                        <td scope="col">{{ $product.Price }}</td>
+                        <td scope="col">{{ $product.Amount }}</td>
+                        <td scope="col">{{ $product.Supplier.Name }}</td>
+                        <td scope="col">{{ $product.Storage.Address }}</td>
+                        <td scope="col">{{ $product.Event.Name }}</td>
+                        <td scope="col">{{ $product.Categories_names }}</td>
+                        <td scope="col">
+                            <button id="" type="button" class="btn btn-sm btn-outline-primary editProduct" data-bs-toggle="modal" data-bs-target="#productEdit" data-id="{{ $product.Id }}" data-number="{{ $product.Number }}" data-name="{{ $product.Name }}" data-price="{{ $product.Price }}" data-amount="{{ $product.Amount }}" data-supplier="{{ $product.Supplier.Id }}" data-storage="{{ $product.Storage.Id }}" data-event="{{ $product.Event.Id }}">Изменить</button>
+                            <button id="" type="button" class="btn btn-sm btn-outline-danger deleteProduct" data-bs-toggle="modal" data-bs-target="#productDelete" data-id="{{ $product.Id }}" data-number="{{ $product.Number }}">Удалить</button>
+                        </td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary mx-1" data-bs-toggle="modal" data-bs-target="#productCreate">Создать новую запись</button>
+            <button type="button" class="btn btn-outline-primary mx-1" data-bs-toggle="modal" data-bs-target="#productFilter">Фильтрация</button>
+        </div>
+
+        <!-- Таблица поставщиков -->
+        <div style="padding: 10px;" class="tab-pane fade" id="nav-supplier" role="tabpanel" aria-labelledby="nav-supplier-tab">
+            <table class="table table-striped caption-top">
+                <caption class="display-6">Список поставщиков</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Идентификатор</th>
+                        <td scope="col">Наименование</td>
+                        <td scope="col">Функции</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range $key, $supplier := .Suppliers }}
+                    <tr>
+                        <th scope="col">{{ $supplier.Id }}</th>
+                        <td scope="col">{{ $supplier.Name }}</td>
+                        <td scope="col text-center">
+                            <button id="" type="button" class="btn btn-sm btn-primary editSupplier" data-bs-toggle="modal" data-bs-target="#supplierEdit" data-id="{{ $supplier.Id }}" data-name="{{ $supplier.Name }}">Изменить</button>
+                            <button id="" type="button" class="btn btn-sm btn-primary deleteSupplier" data-bs-toggle="modal" data-bs-target="#supplierDelete" data-id="{{ $supplier.Id }}" data-name="{{ $supplier.Name }}">Удалить</button>
+                        </td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#supplierCreate">Создать новую запись</button>
+        </div>
+
+        <!-- Таблица хранилищ -->
+        <div style="padding: 10px;" class="tab-pane fade" id="nav-storage" role="tabpanel" aria-labelledby="nav-storage-tab">
+
+        </div>
+        <!-- Таблица акций -->
+        <div style="padding: 10px;" class="tab-pane fade" id="nav-event" role="tabpanel" aria-labelledby="nav-event-tab">
+
+        </div>
+        <!-- Таблица категорий -->
+        <div style="padding: 10px;" class="tab-pane fade" id="nav-category" role="tabpanel" aria-labelledby="nav-category-tab">
+
+        </div>
+
+        <button class="errorBtn visually-hidden" data-bs-toggle="modal" data-bs-target="#errorMassage">
+    </div>
+    <script src="static/bootstrap.js"></script>
+    <script src="static/bootstrap.bundle.js"></script>
+    <script src="static/jquery.js"></script>
+    <script src="static/modals.js"></script>
+    <script>
+        $(function(){
+            var error = document.getElementById('errstr')
+            if (error.innerText != "  ") {
+                $(".errorBtn").trigger("click");
+            }
+        });
+    </script>
+</body>
+</html>

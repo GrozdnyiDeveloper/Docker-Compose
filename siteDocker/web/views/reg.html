@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>Регистрация</title>
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.css">
+    <style>
+        body {
+            display: flex; align-items: center; justify-content: center; text-align: center;
+        }
+        h1 {
+            padding-bottom: 2rem;
+        }
+        label {
+            padding-right: 10px;
+        }
+        button {
+            margin-top: 10px;
+        }
+        form {
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="row justify-content-center">
+            <form action="/registration" method="post" class="form">
+                <h1 class="display-3">Регистрация</h1>
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <input class="form-control" required type="text" placeholder="A" name="phone">
+                        <label for="floatingInput">Номер телефона</label>
+                    </div>    
+                </div>
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <input class="form-control" required type="email" placeholder="A" name="email">
+                        <label for="floatingInput">Почта</label>
+                    </div>     
+                </div>
+                <div class="mb-3">
+                    <div class="form-floating">
+                        <input class="form-control" required minlength="8" type="password" placeholder="A" name="password">
+                        <label for="floatingInput">Пароль</label>
+                    </div>     
+                </div>
+                <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
+            </form>
+    </div>
+    
+    <script src="static/bootstrap.js"></script>
+</body>
+</html>

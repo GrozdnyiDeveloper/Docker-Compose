@@ -1,0 +1,343 @@
+{{define "createProduct"}}
+<div class="modal modal-lg fade" id="productCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Создание продукта</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <form action="/productCreate" method="post" class="form">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input id="productnumber" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" required type="text" placeholder="A" name="number">
+                            <label for="floatingInput">Номер</label>
+                        </div> 
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" required type="text" placeholder="A" name="name">
+                            <label for="floatingInput">Наименование</label>
+                        </div>  
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" required type="number" step="any" placeholder="A" name="price">
+                            <label for="floatingInput">Стоимость</label>
+                        </div>  
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating">
+                            <input class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" required type="number" step="any" placeholder="A" name="amount">
+                            <label for="floatingInput">Количество</label>
+                        </div>  
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" aria-label="Поставщик" name="supplier_id">
+                            <option selected disabled>Поставщик</option>
+                            {{ range $key, $item := .SuppliersA }}
+                                <option value="{{ $item.Id }}">{{ $item.Name }}</option>
+                            {{ end }}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" aria-label="Хранилище" name="storage_id">
+                            <option selected disabled>Хранилище</option>
+                            {{ range $key, $item := .StoragesA }}
+                                <option value="{{ $item.Id }}">{{ $item.Address }}</option>
+                            {{ end }}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" aria-label="Акция" name="event_id">
+                            <option selected disabled>Акция</option>
+                            {{ range $key, $item := .EventsA }}
+                                <option value="{{ $item.Id }}">{{ $item.Name }}</option>
+                            {{ end }}
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Создать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "editProduct"}}
+    <div class="modal modal-lg fade" id="productEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменение продукта</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <form action="/productEdit" method="post" class="form">
+                    <div class="modal-body"> 
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="productId" hidden type="text" name="id">
+                                <input id="productNumber" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" required type="text" placeholder="A" name="number">
+                                <label for="floatingInput">Номер</label>
+                            </div> 
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="productName" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" required type="text" placeholder="A" name="name">
+                                <label for="floatingInput">Наименование</label>
+                            </div>  
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="productPrice" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" step="any" required type="text" placeholder="A" name="price">
+                                <label for="floatingInput">Стоимость</label>
+                            </div>  
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="productAmount" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" step="any" required type="number" placeholder="A" name="amount">
+                                <label for="floatingInput">Количество</label>
+                            </div>  
+                        </div>
+                        <div class="mb-3">
+                            <select id="productSupplier" class="form-select" aria-label="Поставщик" name="supplier_id">
+                                <option selected disabled>Поставщик</option>
+                                {{ range $key, $item := .SuppliersA }}
+                                    <option value="{{ $item.Id }}">{{ $item.Name }}</option>
+                                {{ end }}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <select id="productStorage" class="form-select" aria-label="Хранилище" name="storage_id">
+                                <option selected disabled>Хранилище</option>
+                                {{ range $key, $item := .StoragesA }}
+                                    <option value="{{ $item.Id }}">{{ $item.Address }}</option>
+                                {{ end }}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <select id="productEvent" class="form-select" aria-label="Акция" name="event_id">
+                                <option selected disabled>Акция</option>
+                                {{ range $key, $item := .EventsA }}
+                                    <option value="{{ $item.Id }}">{{ $item.Name }}</option>
+                                {{ end }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Изменить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "deleteProduct"}}
+    <div class="modal modal-lg fade" id="productDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Удаление продукта</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <form action="/productDelete" method="post" class="form">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="productIdDel" hidden type="text" name="id">
+                                <input id="productNumberDel" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" readonly required type="text" placeholder="A" name="number">
+                                <label for="floatingInput">Номер</label>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "filterProduct"}}
+    <div class="modal modal-lg fade" id="productFilter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Фильтрация продуктов</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <form action="/productFilter" method="post" class="form">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="productnumber" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" type="text" placeholder="A" name="number">
+                                <label for="floatingInput">Номер</label>
+                            </div> 
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" type="text" placeholder="A" name="name">
+                                <label for="floatingInput">Наименование</label>
+                            </div>  
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" step="any" type="number" placeholder="A" name="price">
+                                <label for="floatingInput">Стоимость</label>
+                            </div>  
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" step="any" type="number" placeholder="A" name="amount">
+                                <label for="floatingInput">Количество</label>
+                            </div>  
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Поставщик" name="supplier">
+                                <option value="" selected disabled>Поставщик</option>
+                                {{ range $key, $item := .SuppliersA }}
+                                    <option>{{ $item.Name }}</option>
+                                {{ end }}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Хранилище" name="storage">
+                                <option value="" selected disabled>Хранилище</option>
+                                {{ range $key, $item := .StoragesA }}
+                                    <option>{{ $item.Address }}</option>
+                                {{ end }}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" aria-label="Акция" name="event">
+                                <option value="" selected disabled>Акция</option>
+                                {{ range $key, $item := .EventsA }}
+                                    <option>{{ $item.Name }}</option>
+                                {{ end }}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" type="text" placeholder="A" name="categories">
+                                <label for="floatingInput">Категории</label>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Отфильтровать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "createSupplier"}}
+    <div class="modal modal-lg fade" id="supplierCreate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Создание поставщика</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <form action="/supplierCreate" method="post" class="form">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" required type="text" placeholder="A" name="name">
+                                <label for="floatingInput">Наименование</label>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Создать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "editSupplier"}}
+    <div class="modal modal-lg fade" id="supplierEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Изменение поставщика</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <form action="/supplierEdit" method="post" class="form">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="supplierId" hidden type="text" name="id">
+                                <input id="supplierName" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" required type="text" placeholder="A" name="name">
+                                <label for="floatingInput">Наименование</label>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Изменить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "deleteSupplier"}}
+    <div class="modal modal-lg fade" id="supplierDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Удаление поставщика</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <form action="/supplierDelete" method="post" class="form">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input id="supplierIdDel" hidden type="text" name="id">
+                                <input id="supplierNameDel" class="form-control" style="border: none; border-bottom: 1px solid #000000; border-radius: 0;" readonly required type="text" placeholder="A" name="name">
+                                <label for="floatingInput">Наименование</label>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}
+
+{{define "errorWindow"}}
+    <div class="modal modal-lg fade" id="errorMassage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ошибка</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="errstr" class="mb-3"> {{ .ErrorStr }} </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}

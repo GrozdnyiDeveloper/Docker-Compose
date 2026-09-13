@@ -1,0 +1,9 @@
+<div class="mb-3">
+            <div class="d-inline-flex align-items-center">
+                <label style="padding-right: 15px;" class="form-check-label">Пол: </label>
+                <input class="form-check-input" type="radio" name="gender" value=0>
+                <label style="padding-left: 5px; padding-right: 15px;" class="form-check-label">Мужской </label>
+                <input class="form-check-input" type="radio" name="gender" value=1>
+                <label style="padding-left: 5px;" class="form-check-label">Женский </label>
+            </div>     
+        </div>
